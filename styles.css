@@ -43,6 +43,7 @@ h1 {
   gap: 10px;
 }
 
+
 .btn {
   cursor: pointer;
   width: 100px;
@@ -68,6 +69,46 @@ button.btn.selected {
   font-size: 1.2rem;
   align-self: center;
   justify-self: center;
+}
+/*Ček boks*/
+/* Stilizacija labela za bolju preglednost */
+label {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--dark-grey);
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+/* Osnovni stil čekboksa */
+#album-checkbox {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 3px solid var(--golden-yellow);
+  border-radius: 5px;
+  background-color: white;
+  display: inline-block;
+  margin-right: 10px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* Kada je čekboks čekiran */
+#album-checkbox:checked {
+  background-color: var(--golden-yellow);
+  border-color: var(--dark-grey);
+  background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black"><path d="M20.285 6.709l-10.1 10.1-4.47-4.47-1.415 1.414 5.885 5.885 11.515-11.515z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 80%;
+}
+
+/* Hover efekat za čekboks */
+#album-checkbox:hover {
+  border-color: var(--dark-grey);
 }
 
 .close-task-form-btn {
@@ -187,3 +228,4 @@ button.btn.selected {
     margin-bottom: 20px;
   }
 }
+
