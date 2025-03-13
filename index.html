@@ -13,26 +13,35 @@
   <main>
     <h1>Album sa sličicama</h1>
     <div class="todo-app">
+	<label>
+  <input type="checkbox" id="album-checkbox"> Album sam tek kupio
+</label>
+<div id="album-full-message" style="display: none; color: green;">
+		Album je popunjen!
+		</div>
+<br>
       <button id="open-task-form-btn" class="btn large-btn">
         Dodaj sličice koje nedostaju
       </button>
+	 
       <form class="task-form hidden" id="task-form">
         <div class="task-form-header">
           <button id="close-task-form-btn" class="close-task-form-btn" type="button" aria-label="close">           
           </button>
         </div>
         <div class="task-form-body">
-          <label class="task-form-label" for="title-input">Upiši brojeve koje ti nedostaju odvojene zarezom</label>
+          <label class="task-form-label" for="title-input">Upiši brojeve sličica koje ti nedostaju odvojene zarezom</label>
           <input required type="text" class="form-control" id="title-input" value="" />
-          
-          <label class="task-form-label" for="description-input">Ili ovde - videti čemu mogu prići</label>
-          <textarea class="form-control" id="description-input" cols="30" rows="5"></textarea>
+		<label id="title-input-message" style="color: red; display: none;"></label> <!-- Labele za obaveštenje -->
+
+        
         </div>
         <div class="task-form-footer">
           <button id="add-or-update-task-btn" class="btn large-btn" type="submit">
             Napravi kartice sa nedostajućim sličicama
           </button>
         </div>
+		
       </form>
       <dialog id="confirm-close-dialog">
         <form method="dialog">
