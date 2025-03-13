@@ -1,4 +1,5 @@
 const taskForm = document.getElementById("task-form");
+const taskFormBody = document.getElementById("task-form-body");
 const confirmCloseDialog = document.getElementById("confirm-close-dialog");
 const openTaskFormBtn = document.getElementById("open-task-form-btn");
 const closeTaskFormBtn = document.getElementById("close-task-form-btn");
@@ -9,30 +10,58 @@ const tasksContainer = document.getElementById("tasks-container");
 const titleInput = document.getElementById("title-input");
 const dateInput = document.getElementById("date-input");
 const descriptionInput = document.getElementById("description-input");
+const checkbox = document.getElementById("album-checkbox");//checkbox
+const taskLabel = document.querySelector(".task-form-label");
+const titleInputMessage=document.getElementById("title-input-message");
 
 const taskData = JSON.parse(localStorage.getItem("data")) || [];
 let currentTask = {};
 
 const addOrUpdateTask = () => {
   const dataArrIndex = taskData.findIndex((item) => item.id === currentTask.id);
-  const taskObj = {
-    id: `${titleInput.value.toLowerCase().split(" ").join("-")}`,
-    title: titleInput.value,
-    date: "datum",
-    description: "opis",
-  };
 
-  if (dataArrIndex === -1) {
-    taskData.unshift(taskObj); // add
+  // Ako je ček boks selektovan
+  if (checkbox.checked) {
+    // Pretvori vrednost titleInput u broj
+    const numberOfButtons = parseInt(titleInput.value, 10);
+
+    // Proveri da li je vrednost validan broj veći od 0
+    if (!isNaN(numberOfButtons) && numberOfButtons > 0) {
+      // Generiši niz brojeva od 1 do numberOfButtons
+      const numberSequence = Array.from({ length: numberOfButtons }, (_, i) => i + 1).join(',');
+
+      // Kreiraj objekat sa generisanim nizom brojeva u title
+      const taskObj = {
+        id: `${numberSequence}`, // ID je sada niz brojeva
+        title: numberSequence,   // Title je isto niz brojeva
+      };
+
+      if (dataArrIndex === -1) {
+        taskData.unshift(taskObj); // Dodaj zadatak
+      } else {
+        taskData[dataArrIndex] = taskObj; // Ažuriraj postojeći zadatak
+      }
+
+    }
   } else {
-    taskData[dataArrIndex] = taskObj; // update
+    // Ako ček boks nije selektovan, koristi originalnu vrednost titleInput
+    const taskObj = {
+      id: `${titleInput.value.toLowerCase().split(" ").join("-")}`,
+      title: titleInput.value,
+    };
+
+    if (dataArrIndex === -1) {
+      taskData.unshift(taskObj); // Dodaj zadatak
+    } else {
+      taskData[dataArrIndex] = taskObj; // Ažuriraj postojeći zadatak
+    }
   }
 
   localStorage.setItem("data", JSON.stringify(taskData));
-  updateTaskContainer()
-  reset() //resetuje prethodno upisano u modalu i 
-  
+  updateTaskContainer();
+  reset(); // Resetuje prethodno upisano u modalu
 };
+
 
 const updateTaskContainer = () => {
   tasksContainer.innerHTML = "";
@@ -84,6 +113,15 @@ const deleteTask = (buttonEl) => {
   if (remainingValues.length === 0) {
     // Ako nema preostalih dugmića, ukloni ceo zadatak
     taskData.splice(dataArrIndex, 1);
+    
+    // Prikazivanje obaveštenja ako je album popunjen (tj. nema više dugmića)
+    const albumFullMessage = document.getElementById('album-full-message');
+    albumFullMessage.style.display = 'block';
+    
+    // Možeš dodati tajmer da obaveštenje nestane nakon nekoliko sekundi
+    setTimeout(() => {
+      albumFullMessage.style.display = 'none';
+    }, 5000);
   } else {
     // Inače, ažuriraj title zadatka sa preostalim vrednostima (spojenim zarezom)
     taskData[dataArrIndex].title = remainingValues.join(',');
@@ -93,7 +131,6 @@ const deleteTask = (buttonEl) => {
   localStorage.setItem("data", JSON.stringify(taskData));
   updateTaskContainer();
 };
-
 
 
 
@@ -110,6 +147,8 @@ if (taskData.length){updateTaskContainer()}
 openTaskFormBtn.addEventListener("click", () =>
   taskForm.classList.toggle("hidden")
 );
+
+
 
 closeTaskFormBtn.addEventListener("click", () => {
   const formInputsContainValues = titleInput.value || dateInput.value || descriptionInput.value;
@@ -141,3 +180,59 @@ taskForm.addEventListener("click", (e) => {
     deleteTask(e.target);
   }
 });
+
+  checkbox.addEventListener("change", function () {
+    if (this.checked) {
+      // Menja tekst labele
+      taskLabel.textContent = "Upiši koliko sličica ima tvoj album";
+
+      // Resetuje unos i postavlja placeholder
+      titleInput.value = "";
+      titleInput.placeholder = "Unesi broj manji od 1000";
+
+      // Dodaje validaciju
+      titleInput.addEventListener("input", validateInput);
+    } else {
+      // Vraća originalni tekst labele
+      taskLabel.textContent = "Upiši brojeve sličica koje ti nedostaju odvojene zarezom";
+
+      // Uklanja placeholder i validaciju
+      titleInput.placeholder = "";
+      titleInput.removeEventListener("input", validateInput);
+    }
+  });
+
+  function validateInput(event) {
+    let value = event.target.value;
+
+    // Dozvoljava samo brojeve
+    if (!/^\d*$/.test(value)) {
+      event.target.value = value.replace(/\D/g, ""); // Briše sve osim brojeva
+    }
+
+    // Ograničava vrednost na manje od 1000
+    if (value !== "" && parseInt(value, 10) >= 1000) {
+      event.target.value = "999"; // Ako unese 1000 ili više, vraća na 999
+    }
+  }
+  
+	//Sakrivanje labele i ček boksa sa prvog prozora
+  addOrUpdateTaskBtn.addEventListener("click", function () {
+    const titleInputValue = titleInput.value.trim(); // Uzimamo vrednost iz inputa i uklanjamo vodeće i prateće praznine
+	// Splitovanje stringa na osnovu razmaka ili zareza
+	const prviBroj = parseInt(titleInputValue.split(/[\s,]+/)[0], 10); 
+	// Razdvaja prema razmaku (\s) ili zarezu (,) i uzima prvi deo i pakuje u broj
+	console.log("u event listeneru"+prviBroj);
+	if (prviBroj<1000){
+	
+	checkbox.parentElement.style.display = "none"; // Sakriva labelu sa čekboksom
+    openTaskFormBtn.style.display = "none"; // Sakriva dugme
+	
+	}
+	else{
+	
+	titleInputMessage.style.display = "block"; // Prikazivanje poruke
+    titleInputMessage.textContent = "Broj slicica mora biti manji od 1000."; // Obaveštenje
+	}
+	
+  });
