@@ -77,7 +77,9 @@ const updateTaskContainer = () => {
 
         (tasksContainer.innerHTML += `
         <div class="task" id="${id}">
-          <p class="task-title"><strong>Spisak:</strong> ${title}</p> 
+          <p class="task-title"><strong>Spisak:</strong> 
+      ${values.map(val => `<span class="nowrap">${val}</span>`).join(', ')}
+    </p>
 		  <div class="dynamic-buttons">
           ${dynamicButtons}
         </div>         

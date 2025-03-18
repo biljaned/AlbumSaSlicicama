@@ -201,6 +201,11 @@ label {
   margin: 5px 0;
 }
 /*iz script-a*/
+.nowrap {
+  white-space: nowrap; /* Sprečava prelom unutar broja */
+  display: inline-block; /* Omogućava prelamanje samo posle zareza */
+}
+/*iz script-a*/
 .task-title {
   word-wrap: break-word; /* Omogućava prelamanje dugačkih reči */
   overflow-wrap: break-word; /* Osigurava da dug tekst ne izlazi iz okvira */
