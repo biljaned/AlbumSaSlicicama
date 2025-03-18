@@ -77,7 +77,7 @@ const updateTaskContainer = () => {
 
         (tasksContainer.innerHTML += `
         <div class="task" id="${id}">
-          <p><strong>Title:</strong> ${title}</p> 
+          <p class="task-title"><strong>Spisak:</strong> ${title}</p> 
 		  <div class="dynamic-buttons">
           ${dynamicButtons}
         </div>         

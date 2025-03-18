@@ -200,6 +200,13 @@ label {
 .task {
   margin: 5px 0;
 }
+/*iz script-a*/
+.task-title {
+  word-wrap: break-word; /* Omogućava prelamanje dugačkih reči */
+  overflow-wrap: break-word; /* Osigurava da dug tekst ne izlazi iz okvira */
+  white-space: normal; /* Dozvoljava više redova teksta */
+  max-width: 100%; /* Sprečava širenje preko širine kontejnera */
+}
 
 .hidden {
   display: none;
