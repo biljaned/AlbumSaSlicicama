@@ -77,6 +77,7 @@ const updateTaskContainer = () => {
 
         (tasksContainer.innerHTML += `
         <div class="task" id="${id}">
+        <p class="task-counter"><strong>Ukupno nedostaje:</strong> ${values.length} sličica</p>
           <p class="task-title"><strong>Spisak:</strong> 
       ${values.map(val => `<span class="nowrap">${val}</span>`).join(', ')}
     </p>

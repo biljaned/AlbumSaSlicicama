@@ -201,6 +201,13 @@ label {
   margin: 5px 0;
 }
 /*iz script-a*/
+.task-counter {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #d9534f; /* Crvenkasta boja za isticanje */
+}
+/*iz script-a*/
 .nowrap {
   white-space: nowrap; /* Sprečava prelom unutar broja */
   display: inline-block; /* Omogućava prelamanje samo posle zareza */
