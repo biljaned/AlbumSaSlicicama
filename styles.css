@@ -209,7 +209,7 @@ label {
   .todo-app,
   .task-form {
     width: 400px;
-    height: 450px;
+    height: 850px;/*ovde je promenjeno*/
   }
 
   .task-form-label {
